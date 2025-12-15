@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings</title>
+
+<style>
+/* ===== BASE ===== */
+body{
+  margin:0;
+  font-family:Poppins, sans-serif;
+  background:#f1f5f9;
+  transition:0.3s;
+}
+body.dark{
+  background:#0f172a;
+  color:#e5e7eb;
+}
+
+.settings-container{
+  max-width:1100px;
+  margin:40px auto;
+  display:flex;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 25px 50px rgba(0,0,0,0.12);
+  overflow:hidden;
+}
+body.dark .settings-container{
+  background:#020617;
+}
+
+/* ===== LEFT MENU ===== */
+.settings-menu{
+  width:260px;
+  background:#1e3a8a;
+  color:#fff;
+  padding:25px;
+}
+.settings-menu h2{
+  margin-bottom:25px;
+}
+.settings-menu button{
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  background:none;
+  border:none;
+  color:#c7d2fe;
+  text-align:left;
+  font-size:15px;
+  cursor:pointer;
+  border-radius:8px;
+  transition:0.3s;
+}
+.settings-menu button.active,
+.settings-menu button:hover{
+  background:#2563eb;
+  color:#fff;
+}
+
+/* ===== CONTENT ===== */
+.settings-content{
+  flex:1;
+  padding:35px;
+}
+.section{
+  display:none;
+}
+.section.active{
+  display:block;
+  animation:fade 0.4s ease;
+}
+@keyframes fade{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+label{
+  font-size:14px;
+  display:block;
+  margin-top:18px;
+}
+input{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  border-radius:8px;
+  border:1px solid #cbd5e1;
+}
+body.dark input{
+  background:#020617;
+  color:#fff;
+  border:1px solid #334155;
+}
+
+.save-btn{
+  margin-top:25px;
+  background:#2563eb;
+  color:#fff;
+  padding:12px 26px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* ===== TOGGLE ===== */
+.toggle{
+  display:flex;
+  align-items:center;
+  margin-top:20px;
+}
+.toggle input{
+  width:0;
+  height:0;
+  visibility:hidden;
+}
+.toggle span{
+  width:50px;
+  height:26px;
+  background:#94a3b8;
+  border-radius:50px;
+  position:relative;
+  cursor:pointer;
+  margin-right:12px;
+}
+.toggle span::after{
+  content:'';
+  width:20px;
+  height:20px;
+  background:#fff;
+  position:absolute;
+  top:3px;
+  left:4px;
+  border-radius:50%;
+  transition:0.3s;
+}
+.toggle input:checked + span{
+  background:#2563eb;
+}
+.toggle input:checked + span::after{
+  left:26px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="settings-container">
+
+  <!-- LEFT MENU -->
+  <div class="settings-menu">
+    <h2>⚙ Settings</h2>
+    <button class="active" onclick="openTab('profile', this)">Profile</button>
+    <button onclick="openTab('security', this)">Security</button>
+    <button onclick="openTab('notify', this)">Notifications</button>
+    <button onclick="openTab('appearance', this)">Appearance</button>
+    <button onclick="openTab('account', this)">Account</button>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="settings-content">
+
+    <!-- PROFILE -->
+    <div id="profile" class="section active">
+      <h2>Profile Settings</h2>
+      <label>Full Name</label>
+      <input type="text" placeholder="Shreka">
+      <label>Email</label>
+      <input type="email" placeholder="shreka@email.com">
+      <label>Phone</label>
+      <input type="text" placeholder="+91 XXXXX XXXXX">
+      <button class="save-btn">Save Changes</button>
+    </div>
+
+    <!-- SECURITY -->
+    <div id="security" class="section">
+      <h2>Security</h2>
+      <label>Current Password</label>
+      <input type="password">
+      <label>New Password</label>
+      <input type="password">
+      <button class="save-btn">Update Password</button>
+    </div>
+
+    <!-- NOTIFICATIONS -->
+    <div id="notify" class="section">
+      <h2>Notifications</h2>
+      <div class="toggle">
+        <input type="checkbox" id="email">
+        <span></span>
+        <label for="email">Email Alerts</label>
+      </div>
+      <div class="toggle">
+        <input type="checkbox" id="sms">
+        <span></span>
+        <label for="sms">SMS Alerts</label>
+      </div>
+    </div>
+
+    <!-- APPEARANCE -->
+    <div id="appearance" class="section">
+      <h2>Appearance</h2>
+      <div class="toggle">
+        <input type="checkbox" onchange="toggleDark()">
+        <span></span>
+        <label>Dark Mode</label>
+      </div>
+    </div>
+
+    <!-- ACCOUNT -->
+    <div id="account" class="section">
+      <h2>Account</h2>
+      <button class="save-btn" style="background:#dc2626;">Deactivate Account</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function openTab(tab, btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+
+  document.querySelectorAll('.settings-menu button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleDark(){
+  document.body.classList.toggle('dark');
+}
+</script>
+
+</body>
+</html>

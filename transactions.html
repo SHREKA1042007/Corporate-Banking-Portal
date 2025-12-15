@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transactions</title>
+<style>
+body{margin:0;font-family:Poppins;background:#f1f5f9;transition:.3s;}
+body.dark{background:#1e293b;color:white;}
+.nav{background:#1e293b;color:white;padding:18px;font-size:23px;text-align:center;}
+body.dark .nav{background:#0b1220;}
+.table-box{width:92%;margin:25px auto;background:rgba(255,255,255,0.35);padding:20px;border-radius:20px;backdrop-filter:blur(12px);box-shadow:0 8px 30px rgba(0,0,0,.1);}
+body.dark .table-box{background:rgba(30,41,59,0.55);color:white;}
+table{width:100%;border-collapse:collapse;font-size:16px;}
+th{padding:14px;background:#1e293b;color:white;border-radius:10px;}
+body.dark th{background:#0b1220;}
+td{padding:14px;border-bottom:1px solid rgba(0,0,0,0.1);}
+body.dark td{border-color:rgba(255,255,255,0.1);}
+tr:hover td{background:rgba(79,70,229,0.15);transform:scale(1.02);}
+body.dark tr:hover td{background:rgba(79,70,229,0.35);}
+.amount-pos{color:#16a34a;font-weight:600;}
+.amount-neg{color:#dc2626;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="nav">📄 Transactions</div>
+<div class="table-box">
+<input type="text" id="searchTxn" placeholder="Search by Description" style="width:100%;padding:12px;margin-bottom:15px;border-radius:10px;border:1px solid #cbd5e1;outline:none;">
+<table id="txnTable">
+<tr><th>Date</th><th>Description</th><th>Amount</th></tr>
+<tr><td>12 Jan</td><td>Vendor Payment</td><td class="amount-neg">– ₹25,000</td></tr>
+<tr><td>10 Jan</td><td>Funds Received</td><td class="amount-pos">+ ₹40,000</td></tr>
+<tr><td>08 Jan</td><td>Salary Credit</td><td class="amount-pos">+ ₹55,000</td></tr>
+<tr><td>05 Jan</td><td>Service Charge</td><td class="amount-neg">– ₹1,200</td></tr>
+</table>
+<button onclick="downloadCSV()" style="width:100%;padding:12px;border:none;border-radius:12px;background:#4f46e5;color:white;margin-top:12px;cursor:pointer;">Download CSV</button>
+</div>
+
+<script>
+// Search functionality
+document.getElementById('searchTxn').addEventListener('keyup', function(){
+  const val=this.value.toLowerCase();
+  const rows=document.querySelectorAll('#txnTable tr');
+  rows.forEach((row,idx)=>{
+    if(idx===0) return;
+    row.style.display=Array.from(row.cells).some(td=>td.textContent.toLowerCase().includes(val))?'':'none';
+  });
+});
+
+// CSV Download
+function downloadCSV(){
+  let rows=document.querySelectorAll('#txnTable tr');
+  let csvContent='data:text/csv;charset=utf-8,';
+  rows.forEach(r=>{csvContent+=Array.from(r.cells).map(c=>c.textContent).join(',')+'\n';});
+  let encoded=encodeURI(csvContent);
+  let link=document.createElement('a');
+  link.setAttribute('href',encoded);
+  link.setAttribute('download','transactions.csv');
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// Load theme
+window.onload=function(){ if(localStorage.getItem("theme")=="dark") document.body.classList.add("dark"); }
+</script>
+</body>
+</html>

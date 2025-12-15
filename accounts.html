@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Summary</title>
+<style>
+body { margin:0; font-family:Poppins,sans-serif; background:#f1f5f9; transition:.3s; }
+body.dark { background:#1e293b; color:white; }
+.nav { background:#1e293b; color:white; padding:18px; font-size:23px; text-align:center; box-shadow:0 4px 20px rgba(0,0,0,.25); }
+body.dark .nav { background:#0b1220; }
+.table-box { width:92%; margin:25px auto; background:rgba(255,255,255,0.35); padding:20px; border-radius:20px; backdrop-filter:blur(12px); box-shadow:0 8px 30px rgba(0,0,0,.1); transition:.3s; }
+body.dark .table-box { background:rgba(30,41,59,0.55); color:white; }
+table { width:100%; border-collapse:collapse; font-size:16px; }
+th { padding:14px; background:#1e293b; color:white; border-radius:10px; }
+body.dark th { background:#0b1220; }
+td { padding:14px; border-bottom:1px solid rgba(0,0,0,0.1); transition:.2s; }
+body.dark td { border-color:rgba(255,255,255,0.1); }
+tr:hover td { background:rgba(79,70,229,0.15); transform:scale(1.02); }
+body.dark tr:hover td { background:rgba(79,70,229,0.35); }
+.amount { font-weight:600; }
+.amount-pos { color:#16a34a; }
+.amount-neg { color:#dc2626; }
+</style>
+</head>
+<body>
+<div class="nav">💼 Account Summary</div>
+<div class="table-box">
+<input type="text" id="searchAcc" placeholder="Search by Account No or Type" style="width:100%;padding:12px;margin-bottom:15px;border-radius:10px;border:1px solid #cbd5e1;outline:none;">
+<table id="accTable">
+<tr><th>Account No</th><th>Type</th><th>Balance</th></tr>
+<tr><td>8837849384</td><td>Current</td><td class="amount amount-pos">₹ 8,50,000</td></tr>
+<tr><td>1023928840</td><td>Savings</td><td class="amount amount-pos">₹ 2,90,000</td></tr>
+<tr><td>7639201820</td><td>Business</td><td class="amount amount-pos">₹ 12,50,000</td></tr>
+<tr><td>9981827372</td><td>Current</td><td class="amount amount-pos">₹ 4,20,000</td></tr>
+</table>
+</div>
+
+<script>
+// Search functionality
+document.getElementById('searchAcc').addEventListener('keyup', function() {
+  const val = this.value.toLowerCase();
+  const rows = document.querySelectorAll('#accTable tr');
+  rows.forEach((row, idx)=>{
+    if(idx===0) return;
+    row.style.display = Array.from(row.cells).some(td=>td.textContent.toLowerCase().includes(val)) ? '' : 'none';
+  });
+});
+
+// Load theme
+window.onload=function(){ if(localStorage.getItem("theme")=="dark") document.body.classList.add("dark"); }
+</script>
+</body>
+</html>

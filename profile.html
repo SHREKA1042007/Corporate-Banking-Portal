@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<style>
+body{margin:0;font-family:Poppins;background:#f1f5f9;transition:.3s;}
+body.dark{background:#1e293b;color:white;}
+.nav{background:#1e293b;color:white;padding:18px;font-size:23px;text-align:center;}
+body.dark .nav{background:#0b1220;}
+.box{width:90%;margin:25px auto;background:rgba(255,255,255,0.35);padding:25px;border-radius:25px;backdrop-filter:blur(12px);box-shadow:0 8px 30px rgba(0,0,0,.12);}
+body.dark .box{background:rgba(30,41,59,0.55);color:white;}
+input,button{width:100%;padding:14px;margin:12px 0;border-radius:12px;border:1px solid #cbd5e1;font-size:16px;outline:none;}
+button{background:#4f46e5;color:white;border:none;cursor:pointer;transition:.3s;}
+button:hover{background:#4338ca;transform:scale(1.02);}
+</style>
+</head>
+<body>
+<div class="nav">👤 Profile</div>
+<div class="box">
+<input type="text" id="name" placeholder="Full Name" value="John Doe">
+<input type="email" id="email" placeholder="Email" value="johndoe@example.com">
+<input type="tel" id="phone" placeholder="Phone Number" value="+91 9876543210">
+<button onclick="updateProfile()">Update Profile</button>
+</div>
+<script>
+function updateProfile(){
+  const n=document.getElementById('name').value;
+  const e=document.getElementById('email').value;
+  const p=document.getElementById('phone').value;
+  if(!n||!e||!p){ alert('All fields required!'); return; }
+  if(!/^\S+@\S+\.\S+$/.test(e)){ alert('Invalid email!'); return; }
+  alert('Profile Updated Successfully!');
+}
+
+// Load theme
+window.onload=function(){ if(localStorage.getItem("theme")=="dark") document.body.classList.add("dark"); }
+</script>
+</body>
+</html>

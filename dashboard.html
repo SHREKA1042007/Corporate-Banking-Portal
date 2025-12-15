@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<style>
+body { margin:0; font-family:Poppins,sans-serif; background:#f1f5f9; transition:.3s; }
+body.dark { background:#1e293b; color:white; }
+.nav { background:#1e293b; color:white; padding:18px; font-size:23px; text-align:center; box-shadow:0 4px 20px rgba(0,0,0,.25); }
+body.dark .nav { background:#0b1220; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; padding:20px; }
+.card { background:rgba(255,255,255,0.35); backdrop-filter:blur(12px); padding:25px; border-radius:25px; text-align:center; font-size:18px; cursor:pointer; transition:.3s; box-shadow:0 8px 25px rgba(0,0,0,.12); }
+.card:hover { transform:scale(1.05); box-shadow:0 12px 35px rgba(0,0,0,.18); }
+body.dark .card { background:rgba(30,41,59,0.55); color:white; }
+.count { font-size:30px; font-weight:600; margin-top:10px; display:block; }
+</style>
+</head>
+<body>
+<div class="nav">🏦 Corporate Dashboard</div>
+<div class="grid">
+  <div class="card" onclick="location.href='accounts.html'">💼 Account Summary <span class="count" id="accCount">0</span></div>
+  <div class="card" onclick="location.href='transactions.html'">📄 Transactions <span class="count" id="txnCount">0</span></div>
+  <div class="card" onclick="location.href='transfer.html'">💸 Fund Transfer</div>
+  <div class="card" onclick="location.href='loans.html'">🏦 Loans <span class="count" id="loanCount">0</span></div>
+  <div class="card" onclick="location.href='profile.html'">👤 Profile</div>
+  <div class="card" onclick="location.href='settings.html'">⚙ Settings</div>
+</div>
+
+<script>
+// Animate counts
+function animateCount(id, target) {
+  let i=0; let interval=setInterval(()=>{ 
+    if(i>=target){ clearInterval(interval); return; }
+    i++; document.getElementById(id).textContent=i;
+  },30);
+}
+animateCount("accCount",3);
+animateCount("txnCount",124);
+animateCount("loanCount",2);
+
+// Load saved theme
+window.onload = function(){
+  if(localStorage.getItem("theme")=="dark") document.body.classList.add("dark");
+}
+</script>
+</body>
+</html>
